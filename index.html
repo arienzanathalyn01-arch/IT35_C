@@ -7,32 +7,40 @@
 	   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="header">
-		<button class="menu-btn" id="openMenu" aria-label="Open menu">&#9776;</button>
-		<span class="header-title">My App</span>
-	</div>
-	<nav class="side-menu" id="sideMenu">
-		<button class="close-btn" id="closeMenu" aria-label="Close menu">&times;</button>
-		<ul>
-			<li><a href="#home">Home</a></li>
-			<li><a href="#math">Math</a></li>
-			<li><a href="#english">English</a></li>
-			<li><a href="#java">Java</a></li>
-			<li><a href="#leaderboard">Leaderboard</a></li>
-		</ul>
-	</nav>
-	<script>
-		const openMenu = document.getElementById('openMenu');
-		const closeMenu = document.getElementById('closeMenu');
-		const sideMenu = document.getElementById('sideMenu');
-		openMenu.onclick = () => sideMenu.classList.add('open');
-		closeMenu.onclick = () => sideMenu.classList.remove('open');
-
-		document.addEventListener('click', function(e) {
-			if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && e.target !== openMenu) {
-				sideMenu.classList.remove('open');
-			}
-		});
-	</script>
+	   <div class="header">
+		   <button class="menu-btn" id="openMenu" aria-label="Open menu">&#9776;</button>
+		   <span class="header-title">Quiz-EZ</span>
+	   </div>
+	   <nav class="side-menu" id="sideMenu">
+		   <button class="close-btn" id="closeMenu" aria-label="Close menu">&times;</button>
+		   <ul>
+			   <li><a href="#home">Home</a></li>
+			   <li><a href="#math">Math</a></li>
+			   <li><a href="#english">English</a></li>
+			   <li><a href="#java">Java</a></li>
+			   <li><a href="#leaderboard">Leaderboard</a></li>
+		   </ul>
+	   </nav>
+	   <section id="home" class="home-section">
+		   <h1 class="main-title">Quiz-EZ</h1>
+		   <p class="main-desc">Welcome to Quiz-EZ, your easy and fun way to test and improve your knowledge in Math, English, and Java. Choose a subject below to get started!</p>
+		   <div class="home-buttons">
+			   <a href="#math" class="home-btn">Math</a>
+			   <a href="#english" class="home-btn">English</a>
+			   <a href="#java" class="home-btn">Java</a>
+		   </div>
+	   </section>
+	   <script>
+		   const openMenu = document.getElementById('openMenu');
+		   const closeMenu = document.getElementById('closeMenu');
+		   const sideMenu = document.getElementById('sideMenu');
+		   openMenu.onclick = () => sideMenu.classList.add('open');
+		   closeMenu.onclick = () => sideMenu.classList.remove('open');
+		   document.addEventListener('click', function(e) {
+			   if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && e.target !== openMenu) {
+				   sideMenu.classList.remove('open');
+			   }
+		   });
+	   </script>
 </body>
 </html>
