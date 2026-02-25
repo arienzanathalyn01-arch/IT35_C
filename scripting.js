@@ -42,6 +42,17 @@ const quizData = {
 let currentQuiz = null;
 let currentQuestion = 0;
 let score = 0;
+let shuffledQuestions = [];
+
+// Shuffle array function
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
 
 function showSection(sectionId) {
     document.querySelectorAll('section').forEach(sec => {
@@ -50,41 +61,64 @@ function showSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) section.style.display = 'block';
     
-    // Reset quiz when entering a category
+    // Reset and show start screen when entering a category
     if (sectionId === 'math' || sectionId === 'english' || sectionId === 'java') {
-        initQuiz(sectionId);
+        showStartScreen(sectionId);
     }
 }
 
-function initQuiz(category) {
+function showStartScreen(category) {
     currentQuiz = category;
     currentQuestion = 0;
     score = 0;
     
-    const quizContainer = document.getElementById('quiz-container');
-    const quizContent = document.getElementById('quiz-content');
-    const resultContainer = document.getElementById('result-container');
+    const section = document.getElementById(category);
+    const startContainer = section.querySelector('.start-container');
+    const quizContainer = section.querySelector('.quiz-container');
+    const resultContainer = section.querySelector('.result-container');
     
-    if (quizContainer && quizContent && resultContainer) {
-        quizContainer.style.display = 'block';
-        resultContainer.style.display = 'none';
-        showQuestion();
+    if (startContainer) startContainer.style.display = 'block';
+    if (quizContainer) quizContainer.style.display = 'none';
+    if (resultContainer) resultContainer.style.display = 'none';
+}
+
+function startQuiz(category) {
+    if (category) {
+        currentQuiz = category;
     }
+    
+    // Shuffle questions randomly
+    shuffledQuestions = shuffleArray(quizData[currentQuiz]);
+    
+    currentQuestion = 0;
+    score = 0;
+    
+    const section = document.getElementById(currentQuiz);
+    const startContainer = section.querySelector('.start-container');
+    const quizContainer = section.querySelector('.quiz-container');
+    const resultContainer = section.querySelector('.result-container');
+    
+    if (startContainer) startContainer.style.display = 'none';
+    if (quizContainer) quizContainer.style.display = 'block';
+    if (resultContainer) resultContainer.style.display = 'none';
+    
+    showQuestion();
 }
 
 function showQuestion() {
-    const questions = quizData[currentQuiz];
-    const quizContent = document.getElementById('quiz-content');
+    const questions = shuffledQuestions;
+    const section = document.getElementById(currentQuiz);
+    const quizContainer = section.querySelector('.quiz-container');
     
-    if (!quizContent || currentQuestion >= questions.length) {
+    if (!quizContainer || currentQuestion >= questions.length) {
         showResults();
         return;
     }
     
     const q = questions[currentQuestion];
-    const questionNum = document.getElementById('question-num');
-    const questionText = document.getElementById('question-text');
-    const optionsContainer = document.getElementById('options-container');
+    const questionNum = quizContainer.querySelector('.question-num');
+    const questionText = quizContainer.querySelector('.question-text');
+    const optionsContainer = quizContainer.querySelector('.options-container');
     
     if (questionNum) questionNum.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
     if (questionText) questionText.textContent = q.question;
@@ -102,10 +136,13 @@ function showQuestion() {
 }
 
 function selectAnswer(selectedIndex) {
-    const questions = quizData[currentQuiz];
+    const questions = shuffledQuestions;
     const correctIndex = questions[currentQuestion].correct;
     
-    const options = document.querySelectorAll('.option-btn');
+    const section = document.getElementById(currentQuiz);
+    const optionsContainer = section.querySelector('.options-container');
+    const options = optionsContainer.querySelectorAll('.option-btn');
+    
     options.forEach((btn, index) => {
         btn.disabled = true;
         if (index === correctIndex) {
@@ -126,34 +163,42 @@ function selectAnswer(selectedIndex) {
 }
 
 function showResults() {
-    const quizContainer = document.getElementById('quiz-container');
-    const resultContainer = document.getElementById('result-container');
-    const scoreText = document.getElementById('score-text');
-    const finalScore = document.getElementById('final-score');
+    const section = document.getElementById(currentQuiz);
+    const quizContainer = section.querySelector('.quiz-container');
+    const resultContainer = section.querySelector('.result-container');
+    const scoreText = resultContainer.querySelector('.score-text');
+    const finalScore = resultContainer.querySelector('.final-score');
     
     if (quizContainer && resultContainer) {
         quizContainer.style.display = 'none';
         resultContainer.style.display = 'block';
         
+        // Determine feedback based on score
+        let feedback = "";
+        if (score >= 9) {
+            feedback = "Excellent! 🌟";
+        } else if (score >= 7) {
+            feedback = "Very Good! 👍";
+        } else if (score >= 5) {
+            feedback = "Nice! 😊";
+        } else if (score >= 3) {
+            feedback = "Good Try! 💪";
+        } else {
+            feedback = "Very Bad 😢";
+        }
+        
         if (scoreText) {
-            const percentage = (score / 10) * 100;
-            if (percentage >= 80) {
-                scoreText.textContent = "Excellent! 🎉";
-            } else if (percentage >= 60) {
-                scoreText.textContent = "Good Job! 👍";
-            } else {
-                scoreText.textContent = "Keep Practicing! 💪";
-            }
+            scoreText.textContent = feedback;
         }
         
         if (finalScore) {
-            finalScore.textContent = `You scored ${score} out of 10`;
+            finalScore.textContent = `Total Points: ${score} / 10`;
         }
     }
 }
 
 function restartQuiz() {
-    initQuiz(currentQuiz);
+    startQuiz();
 }
 
 // Initialize on DOM load
@@ -165,9 +210,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const section = document.getElementById(sectionId);
         if (section) section.style.display = 'block';
         
-        // Reset quiz when entering a category
+        // Reset and show start screen when entering a category
         if (sectionId === 'math' || sectionId === 'english' || sectionId === 'java') {
-            initQuiz(sectionId);
+            showStartScreen(sectionId);
         }
     }
     showSection('home');
