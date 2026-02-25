@@ -3,9 +3,36 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title></title>
+<title>My App</title>
+	   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
+	<div class="header">
+		<button class="menu-btn" id="openMenu" aria-label="Open menu">&#9776;</button>
+		<span class="header-title">My App</span>
+	</div>
+	<nav class="side-menu" id="sideMenu">
+		<button class="close-btn" id="closeMenu" aria-label="Close menu">&times;</button>
+		<ul>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#math">Math</a></li>
+			<li><a href="#english">English</a></li>
+			<li><a href="#java">Java</a></li>
+			<li><a href="#leaderboard">Leaderboard</a></li>
+		</ul>
+	</nav>
+	<script>
+		const openMenu = document.getElementById('openMenu');
+		const closeMenu = document.getElementById('closeMenu');
+		const sideMenu = document.getElementById('sideMenu');
+		openMenu.onclick = () => sideMenu.classList.add('open');
+		closeMenu.onclick = () => sideMenu.classList.remove('open');
+
+		document.addEventListener('click', function(e) {
+			if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && e.target !== openMenu) {
+				sideMenu.classList.remove('open');
+			}
+		});
+	</script>
 </body>
 </html>
