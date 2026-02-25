@@ -1,61 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App</title>
-	   <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz-EZ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	   <div class="header">
-		   <button class="menu-btn" id="openMenu" aria-label="Open menu">&#9776;</button>
-		   <span class="header-title">Quiz-EZ</span>
-	   </div>
-	   <nav class="side-menu" id="sideMenu">
-		   <button class="close-btn" id="closeMenu" aria-label="Close menu">&times;</button>
-		   <ul>
-			   <li><a href="#home">Home</a></li>
-			   <li><a href="#math">Math</a></li>
-			   <li><a href="#english">English</a></li>
-			   <li><a href="#java">Java</a></li>
-			   <li><a href="#leaderboard">Leaderboard</a></li>
-		   </ul>
-	   </nav>
-	   <div id="main-content" class="main-content">
-		   <section id="home" class="home-section">
-			   <h1 class="main-title">Quiz-EZ</h1>
-			   <p class="main-desc">Welcome to Quiz-EZ, your easy and fun way to test and improve your knowledge in Math, English, and Java. Choose a subject below to get started!</p>
-			   <div class="home-buttons">
-				   <a href="#math" class="home-btn">Math</a>
-				   <a href="#english" class="home-btn">English</a>
-				   <a href="#java" class="home-btn">Java</a>
-			   </div>
-		   </section>
-		   <section id="math" class="category-section" style="display:none">
-			   <h1 class="main-title">Math</h1>
-		   </section>
-		   <section id="english" class="category-section" style="display:none">
-			   <h1 class="main-title">English</h1>
-		   </section>
-		   <section id="java" class="category-section" style="display:none">
-			   <h1 class="main-title">Java</h1>
-		   </section>
-		   <section id="leaderboard" class="category-section" style="display:none">
-			   <h1 class="main-title">Leaderboard</h1>
-		   </section>
-	   </div>
-	   <script>
-		   const openMenu = document.getElementById('openMenu');
-		   const closeMenu = document.getElementById('closeMenu');
-		   const sideMenu = document.getElementById('sideMenu');
-		   openMenu.onclick = () => sideMenu.classList.add('open');
-		   closeMenu.onclick = () => sideMenu.classList.remove('open');
-		   document.addEventListener('click', function(e) {
-			   if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && e.target !== openMenu) {
-				   sideMenu.classList.remove('open');
-			   }
-		   });
-	   </script>
-	   <script src="scripting.js"></script>
+  <div class="header">
+    <button class="menu-btn" id="openMenu" aria-label="Open menu">&#9776;</button>
+    <span class="header-title">Quiz-EZ</span>
+  </div>
+  <nav class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeMenu" aria-label="Close menu">&times;</button>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#math">Math</a></li>
+      <li><a href="#english">English</a></li>
+      <li><a href="#java">Java</a></li>
+    </ul>
+  </nav>
+  <div id="main-content" class="main-content">
+    <section id="home" class="home-section">
+      <h1 class="main-title">Quiz-EZ</h1>
+      <p class="main-desc">Welcome to Quiz-EZ, your easy and fun way to test and improve your knowledge in Math, English, and Java. Choose a subject below to get started!</p>
+      <div class="home-buttons">
+        <a href="#math" class="home-btn">Math</a>
+        <a href="#english" class="home-btn">English</a>
+        <a href="#java" class="home-btn">Java</a>
+      </div>
+    </section>
+    <section id="math" class="category-section" style="display:none">
+      <h1 class="main-title">Math Quiz</h1>
+      <div id="quiz-container" class="quiz-container">
+        <p id="question-num" class="question-num">Question 1 of 10</p>
+        <p id="question-text" class="question-text"></p>
+        <div id="options-container" class="options-container"></div>
+      </div>
+      <div id="result-container" class="result-container">
+        <p id="score-text" class="score-text"></p>
+        <p id="final-score" class="final-score"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+      </div>
+    </section>
+    <section id="english" class="category-section" style="display:none">
+      <h1 class="main-title">English Quiz</h1>
+      <div id="quiz-container" class="quiz-container">
+        <p id="question-num" class="question-num">Question 1 of 10</p>
+        <p id="question-text" class="question-text"></p>
+        <div id="options-container" class="options-container"></div>
+      </div>
+      <div id="result-container" class="result-container">
+        <p id="score-text" class="score-text"></p>
+        <p id="final-score" class="final-score"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+      </div>
+    </section>
+    <section id="java" class="category-section" style="display:none">
+      <h1 class="main-title">Java Quiz</h1>
+      <div id="quiz-container" class="quiz-container">
+        <p id="question-num" class="question-num">Question 1 of 10</p>
+        <p id="question-text" class="question-text"></p>
+        <div id="options-container" class="options-container"></div>
+      </div>
+      <div id="result-container" class="result-container">
+        <p id="score-text" class="score-text"></p>
+        <p id="final-score" class="final-score"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Play Again</button>
+      </div>
+    </section>
+  </div>
+  <script src="scripting.js"></script>
 </body>
 </html>
